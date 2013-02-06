@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <meta name="viewport" content="width=320; user-scalable=no" />
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    
+    <title>Minimal AppLaud App</title>
+     
+ 		<script type="text/javascript" charset="utf-8" src="phonegap-1.4.1.js"></script>
+	  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+		<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+		<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
+	 
+	  
+	  
+	  <script type="text/javascript" charset="utf-8">
+      
+        var onDeviceReady = function() {
+            document.getElementById("devready").innerHTML = "OnDeviceReady fired.";
+        };
+
+        function init() {
+            document.addEventListener("deviceready", onDeviceReady, true);
+        }   
+        function listar(){
+    		alert("listar");
+    		var texto="";
+    		$.post("http://localhost/sge/articulos_json.php",null, 
+    		function(data){
+    			for(fila in data){
+    				texto=texto+"<li><a href='#'><img src='./jquery.mobile/images/ajax-loader.gif' class='ui-li-thumb'>";
+	  				  texto=texto+"<h3>"+data[fila]['Nombre']+"</h3>";
+	 				  texto=texto+"<p>"+data[fila]['Descripcion']+"</p>";
+	 				  texto=texto+"</a></li>";
+	 				  $('#lista').append(texto);
+    			}
+    				
+    			
+    			location.href="listview";
+    		},'json');
+    	}
+</script>  
+
+  </head>
+  <body onload="init();" id="stage" class="theme">
+		<div id="login" data-role="page">
+			<div data-role="fieldcontain" class="ui-hide-label">
+				
+				<input type="text" name="usuario" id="usuario" value="" placeholder="Usuario"/>
+			</div>
+   			<div data-role="fieldcontain" class="ui-hide-label">
+				
+				<input type="text" name="pass" id="pass" value="" placeholder="Contraseña"/>
+			</div>
+			<a href="index.html#pag_noticias" data-role="button" data-theme="a">Entrar</a>
+		</div>
+		<div id="pag_noticias" data-role="page">
+			<div data-role="footer" data-theme="a" data-position="fixed" class="ui-footer ui-bar-a ui-footer-fixed">	
+					
+				<div data-role="navbar">
+					<ul>
+						<li><a href="#">Noticias</a></li>
+						<li><a href="#">Eventos</a></li>
+						<li><a href="#">DJ's</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div id="pag_eventos" data-role="page">
+			<div data-role="footer" data-theme="a" data-position="fixed" class="ui-footer ui-bar-a ui-footer-fixed">	
+					
+				<div data-role="navbar">
+					<ul>
+						<li><a href="#">Noticias</a></li>
+						<li><a href="#">Eventos</a></li>
+						<li><a href="#">DJ's</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div id="pag_dj" data-role="page">
+			<div data-role="footer" data-theme="a" data-position="fixed" class="ui-footer ui-bar-a ui-footer-fixed">	
+					
+				<div data-role="navbar">
+					<ul>
+						<li><a href="#">Noticias</a></li>
+						<li><a href="#">Eventos</a></li>
+						<li><a href="#">DJ's</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+  </body>
+</html>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="lib" path="assets/www/jquery.mobile/jquery.mobile-1.1.0.js"/>
+	<classpathentry kind="lib" path="assets/www/jquery.mobile/jquery.mobile-1.1.0.min.js"/>
+	<classpathentry kind="con" path="org.eclipse.wst.jsdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path=""/>
+</classpath>
