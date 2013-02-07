@@ -4,16 +4,13 @@
     <meta name="viewport" content="width=320; user-scalable=no" />
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     
-    <title>Minimal AppLaud App</title>
+    <title>Follow DJ</title>
      
  		<script type="text/javascript" charset="utf-8" src="phonegap-1.4.1.js"></script>
-	  <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+	  	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
 		<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
 		<script src="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.js"></script>
-	 
-	  
-	  
-	  <script type="text/javascript" charset="utf-8">
+	  	<script type="text/javascript" charset="utf-8">
       
         var onDeviceReady = function() {
             document.getElementById("devready").innerHTML = "OnDeviceReady fired.";
@@ -21,92 +18,88 @@
 
         function init() {
             document.addEventListener("deviceready", onDeviceReady, true);
-        }   
-        function listar(){
-    		alert("listar");
+        }  
+        function listar_noticias(){
     		var texto="";
-    		$.post("http://localhost/Proyecto/assets/www/listar_dj_json.php",null, 
+    		$.post("http://localhost/JSON_aplicacion/listar_noticias_json.php",null, 
     		function(data){
     			for(fila in data){
-    				texto=texto+"<li><a href='#'><img src='./jquery.mobile/images/ajax-loader.gif' class='ui-li-thumb'>";
+    				  texto=texto+"<h2>"+data[fila]['nombre']+"</h2>";
+	  				  texto=texto+"<h3>"+data[fila]['titulo']+"</h3>";
+	  				  texto=texto+"<h4>"+data[fila]['fecha']+"</h4>"
+	 				  texto=texto+"<p>"+data[fila]['descripcion']+"</p>";
+	 				
+	 				  $('#noticias').append(texto);
+    			}
+    			
+    		},'json');
+    	} 
+        function listar_dj(){
+    		var texto="";
+    		$.post("http://localhost/JSON_aplicacion/listar_dj_json.php",null, 
+    		function(data){
+    			$('#lista').empty();
+    			for(fila in data){
+    				texto=texto+"<li><a href='#'>";
 	  				  texto=texto+"<h3>"+data[fila]['Nombre']+"</h3>";
 	 				  texto=texto+"<p>"+data[fila]['Descripcion']+"</p>";
 	 				  texto=texto+"</a></li>";
 	 				  $('#lista').append(texto);
     			}
-    				
-    			
+    			$('#lista').listview('refresh');
     			
     		},'json');
     	}
-</script>  
+	</script>  
 
   </head>
   <body onload="init();" id="stage" class="theme">
 		<div id="login" data-role="page">
 			<div data-role="fieldcontain" class="ui-hide-label">
-				
 				<input type="text" name="usuario" id="usuario" value="" placeholder="Usuario"/>
 			</div>
    			<div data-role="fieldcontain" class="ui-hide-label">
-				
-				<input type="text" name="pass" id="pass" value="" placeholder="Contraseña"/>
+				<input type="password" name="pass" id="pass" value="" placeholder="Contraseña"/>
 			</div>
-			<a href="index.html#pag_noticias" data-role="button" data-theme="a">Entrar</a>
+			<a href="index.html#pag_noticias" onClick="listar_noticias();"data-role="button" data-theme="a">Entrar</a>
 		</div>
-		<div id="pag_noticias" data-role="page">
+		<div id="pag_noticias" data-role="page" onload="listar_noticias();">
+			<div>
+								
+				
+			</div>
 			<div data-role="footer" data-theme="a" data-position="fixed" class="ui-footer ui-bar-a ui-footer-fixed">	
-					
 				<div data-role="navbar">
 					<ul>
-						<li><a href="#">Noticias</a></li>
-						<li><a href="#">Eventos</a></li>
-						<li><a href="index.html#pag_dj" onClick="listar();">DJ's</a></li>
+						<li><a href="index.html#pag_noticias" onClick="listar_noticias();">Noticias</a></li>
+						<li><a href="index.html#pag_eventos">Eventos</a></li>
+						<li><a href="index.html#pag_dj" onClick="listar_dj();">DJ's</a></li>
 					</ul>
 				</div>
 			</div>
 		</div>
 		<div id="pag_eventos" data-role="page">
 			<div data-role="footer" data-theme="a" data-position="fixed" class="ui-footer ui-bar-a ui-footer-fixed">	
-					
 				<div data-role="navbar">
 					<ul>
-						<li><a href="#">Noticias</a></li>
-						<li><a href="#">Eventos</a></li>
-						<li><a href="#">DJ's</a></li>
+						<li><a href="index.html#pag_noticias">Noticias</a></li>
+						<li><a href="index.html#pag_eventos">Eventos</a></li>
+						<li><a href="index.html#pag_dj" onClick="listar_dj();">DJ's</a></li>
 					</ul>
 				</div>
 			</div>
 		</div>
-		<div id="pag_dj" data-role="page">
-			<div data-role="content">
-  			
-  			<ul data-role="listview" id="lista">
-	  				<li><img src="./jquery.mobile/images/ajax-loader.gif" class="ui-li-thumb">
-	  				  <a href="#">
-	  					<h3 class="ui-li-heading">Nombre</h3>
-	  					<p class="ui-li-desc">Estilo</p>	
-	  				 </a>
-	  				 </li>	
-	  				<li><img src="C:/Users/SERRANATOR/Desktop/Captura.PNG" width="75" height="75" class="ui-li-thumb">
-	  				  <a href="#">
-	  					<h3 class="ui-li-heading">Nombre</h3></li>
-	  					<p class="ui-li-desc">Estilo</p>
-	  				 </a>
-  				<li><img src="C:/Users/SERRANATOR/Desktop/Captura.PNG" width="75" height="75" class="ui-li-thumb">
-	  				  <a href="#">
-	  					<h3 class="ui-li-heading">Nombre</h3></li>
-	  					<p class="ui-li-desc">Estilo</p>
-	  				 </a>
-  			</ul>
-  			<a href="#Menu">Pagina menu</a>
-  		</div>
+		<div id="pag_dj" data-role="page" onload="listar();">
+				<div data-role="content">
+		  			<ul data-role="listview" id="lista">		
+		  			</ul>
+	  			</div>
 			<div data-role="footer" data-theme="a" data-position="fixed" class="ui-footer ui-bar-a ui-footer-fixed">	
 				<div data-role="navbar">
 					<ul>
-						<li><a href="#">Noticias</a></li>
-						<li><a href="#">Eventos</a></li>
-						<li><a href="#">DJ's</a></li>
+						<li><a href="index.html#pag_noticias">Noticias</a></li>
+						<li><a href="index.html#pag_eventos">Eventos</a></li>
+						<li><a href="index.html#pag_dj" onClick="listar_dj();">DJ's</a></li>
 					</ul>
 				</div>
 			</div>
