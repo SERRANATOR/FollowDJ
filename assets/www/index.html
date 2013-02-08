@@ -19,11 +19,30 @@
         function init() {
             document.addEventListener("deviceready", onDeviceReady, true);
         }  
+        
+        function cargar_pagina_dj(id){
+        	alert(id);
+    		$('#contenido_dj').html('');
+    		$.post("http://localhost/JSON_aplicacion/cargar_pagina_dj_json.php",{id_dj: id}, 
+    		function(data){
+    			
+    			for(fila in data){
+    				var texto="";
+    				  texto=texto+"<h2>"+data[fila]['nombre']+"</h2>";
+	 				  texto=texto+"<p>"+data[fila]['descripcion']+"</p>";
+	 				  $('#contenido_dj').append(texto);
+    			}
+    			
+    		},'json');
+    	} 
+    	
         function listar_noticias(){
-    		var texto="";
+    		$('#noticias').html('');
     		$.post("http://localhost/JSON_aplicacion/listar_noticias_json.php",null, 
     		function(data){
+    			
     			for(fila in data){
+    				var texto="";
     				  texto=texto+"<h2>"+data[fila]['nombre']+"</h2>";
 	  				  texto=texto+"<h3>"+data[fila]['titulo']+"</h3>";
 	  				  texto=texto+"<h4>"+data[fila]['fecha']+"</h4>"
@@ -34,13 +53,34 @@
     			
     		},'json');
     	} 
+    	
+    	function listar_eventos(){
+    		$('#noticias').html('');
+    		$.post("http://localhost/JSON_aplicacion/listar_eventos_json.php",null, 
+    		function(data){
+    			
+    			for(fila in data){
+    				var texto="";
+    				  texto=texto+"<h2>"+data[fila]['nombre']+"</h2>";
+	  				  texto=texto+"<h3>"+data[fila]['dj']+"</h3>";
+	  				  texto=texto+"<h4>"+data[fila]['fecha']+"</h4>"
+	 				  texto=texto+"<p>"+data[fila]['descripcion']+"</p>";
+	 				
+	 				  $('#eventos').append(texto);
+    			}
+    			
+    		},'json');
+    	}
+    	
         function listar_dj(){
-    		var texto="";
+    		
     		$.post("http://localhost/JSON_aplicacion/listar_dj_json.php",null, 
     		function(data){
     			$('#lista').empty();
     			for(fila in data){
-    				texto=texto+"<li><a href='#'>";
+    				var texto="";
+    				  texto=texto+'<li><a href="#pagina_dj" onClick="cargar_pagina_dj(\''+data[fila]['id']+'\');">' 
+    				  //texto=texto+'<a align="center" onclick="detalles_even(\''+data[u]['id']+'\',\''+data[u]['nombre_grupo']+'\',\''+data[u]['descripcion']+'\', \''+data[u]['latitud']+'\', \''+data[u]['longitud']+'\', \''+data[u]['nombre_evento']+'\', \''+data[u]['fecha']+'\', \''+data[u]['id_grupo']+'\')"><h3 >Nombre: '+data[u]['nombre_evento']+'</h3>';                      
 	  				  texto=texto+"<h3>"+data[fila]['Nombre']+"</h3>";
 	 				  texto=texto+"<p>"+data[fila]['Descripcion']+"</p>";
 	 				  texto=texto+"</a></li>";
@@ -64,32 +104,32 @@
 			<a href="index.html#pag_noticias" onClick="listar_noticias();"data-role="button" data-theme="a">Entrar</a>
 		</div>
 		<div id="pag_noticias" data-role="page" onload="listar_noticias();">
-			<div>
-								
-				
+			<div id="noticias">
 			</div>
 			<div data-role="footer" data-theme="a" data-position="fixed" class="ui-footer ui-bar-a ui-footer-fixed">	
 				<div data-role="navbar">
 					<ul>
 						<li><a href="index.html#pag_noticias" onClick="listar_noticias();">Noticias</a></li>
-						<li><a href="index.html#pag_eventos">Eventos</a></li>
+						<li><a href="index.html#pag_eventos" onClick="listar_eventos();">Eventos</a></li>
 						<li><a href="index.html#pag_dj" onClick="listar_dj();">DJ's</a></li>
 					</ul>
 				</div>
 			</div>
 		</div>
 		<div id="pag_eventos" data-role="page">
+			<div id="eventos">
+			</div>
 			<div data-role="footer" data-theme="a" data-position="fixed" class="ui-footer ui-bar-a ui-footer-fixed">	
 				<div data-role="navbar">
 					<ul>
 						<li><a href="index.html#pag_noticias">Noticias</a></li>
-						<li><a href="index.html#pag_eventos">Eventos</a></li>
+						<li><a href="index.html#pag_eventos" onClick="listar_eventos();">Eventos</a></li>
 						<li><a href="index.html#pag_dj" onClick="listar_dj();">DJ's</a></li>
 					</ul>
 				</div>
 			</div>
 		</div>
-		<div id="pag_dj" data-role="page" onload="listar();">
+		<div id="pag_dj" data-role="page">
 				<div data-role="content">
 		  			<ul data-role="listview" id="lista">		
 		  			</ul>
@@ -103,6 +143,13 @@
 					</ul>
 				</div>
 			</div>
+		</div>
+		<div id="pagina_dj" data-role="page">
+			<div id="contenido_dj">
+				
+			</div>
+			
+			
 		</div>
   </body>
 </html>
