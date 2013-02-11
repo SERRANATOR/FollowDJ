@@ -21,13 +21,13 @@
         }  
         
         function cargar_pagina_dj(id){
-        	alert(id);
+        	
     		$('#contenido_dj').html('');
-    		$.post("http://localhost/JSON_aplicacion/cargar_pagina_dj_json.php",{id_dj: id}, 
+    		$.post("http://localhost/JSON_aplicacion/cargar_pagina_dj_json.php",{id_dj: id},
     		function(data){
-    			
     			for(fila in data){
     				var texto="";
+    				
     				  texto=texto+"<h2>"+data[fila]['nombre']+"</h2>";
 	 				  texto=texto+"<p>"+data[fila]['descripcion']+"</p>";
 	 				  $('#contenido_dj').append(texto);
@@ -35,6 +35,39 @@
     			
     		},'json');
     	} 
+    	
+    	function cargar_estilo(id){
+    		
+    		$('#estilo_dj').html('');
+    		$.post("http://localhost/JSON_aplicacion/cargar_estilo_dj.php",{id_dj: id},
+    		
+    		function(data){
+    			for(fila in data){
+    				var texto="";
+    				  texto=texto+"<h2>"+data[fila]['nombre']+"</h2>";
+	 				  $('#estilo_dj').append(texto);
+    			}
+    			
+    		},'json');
+    	}
+    	
+    	function cargar_album(nombre){
+    		
+    		$('#album').html('');
+    		$.post("http://localhost/JSON_aplicacion/cargar_album_json.php",{nombre_dj: nombre},
+    		function(data){
+    			
+    			for(fila in data){
+    				alert(data[fila]['nombre']);
+    				var texto="";
+    				  texto=texto+"<h2>"+data[fila]['nombre']+"</h2>";
+    				  texto=texto+"<h3>Año: "+data[fila]['anno']+"</h2>";
+    				  alert(texto);
+	 				  $('#album').append(texto);
+    			}
+    			
+    		},'json');
+    	}
     	
         function listar_noticias(){
     		$('#noticias').html('');
@@ -79,8 +112,8 @@
     			$('#lista').empty();
     			for(fila in data){
     				var texto="";
-    				  texto=texto+'<li><a href="#pagina_dj" onClick="cargar_pagina_dj(\''+data[fila]['id']+'\');">' 
-    				  //texto=texto+'<a align="center" onclick="detalles_even(\''+data[u]['id']+'\',\''+data[u]['nombre_grupo']+'\',\''+data[u]['descripcion']+'\', \''+data[u]['latitud']+'\', \''+data[u]['longitud']+'\', \''+data[u]['nombre_evento']+'\', \''+data[u]['fecha']+'\', \''+data[u]['id_grupo']+'\')"><h3 >Nombre: '+data[u]['nombre_evento']+'</h3>';                      
+    				//alert(data[fila]['id']);
+    				  texto=texto+'<li><a href="#pagina_dj" onClick="cargar_pagina_dj(\''+data[fila]['id']+'\');cargar_estilo(\''+data[fila]['id']+'\');cargar_album(\''+data[fila]['Nombre']+'\');">';
 	  				  texto=texto+"<h3>"+data[fila]['Nombre']+"</h3>";
 	 				  texto=texto+"<p>"+data[fila]['Descripcion']+"</p>";
 	 				  texto=texto+"</a></li>";
@@ -146,7 +179,12 @@
 		</div>
 		<div id="pagina_dj" data-role="page">
 			<div id="contenido_dj">
-				
+			</div>
+			<div id="estilo_dj">
+			</div>
+			<div id="album">
+			</div>
+			<div id="canciones">
 			</div>
 			
 			
